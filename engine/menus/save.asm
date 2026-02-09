@@ -158,7 +158,7 @@ SaveMenu:
 	call SaveGameData
 	ld hl, SavingText
 	call PrintText
-	ld c, 128
+	ld c, 20 ; reduced delay from 128
 	call DelayFrames
 	ld hl, GameSavedText
 	call PrintText
