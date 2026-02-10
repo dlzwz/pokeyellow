@@ -478,6 +478,14 @@ PokemonMenuEntries:
 	next "SWITCH"
 	next "CANCEL@"
 
+; Entry point for cross-bank calls to CanLearnFieldMove
+; Move ID read from [wNamedObjectIndex], Pokemon index in [wWhichPokemon]
+; Returns: carry clear if can learn, carry set if cannot learn
+CanLearnFieldMoveEntry::
+	ld a, [wNamedObjectIndex]
+	ld b, a
+; fall through
+
 ; Check if the Pokemon in [wWhichPokemon] can learn move in register b
 ; Returns: carry clear if can learn, carry set if cannot learn
 ; Preserves: bc, de, hl

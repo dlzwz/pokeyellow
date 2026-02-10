@@ -37,11 +37,13 @@ IsSurfingAllowed:
 	ret nc
 	ld hl, wStatusFlags1
 	res BIT_SURF_ALLOWED, [hl]
+	callfar InitializeFieldMoveTextBox
 	ld hl, CurrentTooFastText
 	jp PrintText
 .forcedToRideBike
 	ld hl, wStatusFlags1
 	res BIT_SURF_ALLOWED, [hl]
+	callfar InitializeFieldMoveTextBox
 	ld hl, CyclingIsFunText
 	jp PrintText
 
