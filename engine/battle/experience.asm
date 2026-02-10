@@ -116,7 +116,9 @@ GainExperience:
 	ld a, [hl]
 	ld [wCurSpecies], a
 	call GetMonHeader
-	ld d, MAX_LEVEL
+	call GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp
 	ldh a, [hExperience]
@@ -142,6 +144,17 @@ GainExperience:
 	ld [hld], a
 	dec hl
 .next2
+; if mon is at level cap, skip exp gained message
+	push hl
+	ld bc, MON_LEVEL - MON_EXP
+	add hl, bc
+	ld a, [hl]
+	pop hl
+	ld b, a
+	ld a, [wMaxLevel]
+	cp b
+	jp c, .nextMon ; cap < level, skip
+	jp z, .nextMon ; cap == level, skip
 	push hl
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
@@ -380,3 +393,41 @@ GrewLevelText:
 	text_far _GrewLevelText
 	sound_level_up
 	text_end
+
+; function to count the set bits in wObtainedBadges
+; returns the number of badges in wNumSetBits
+GetBadgesObtained::
+	push de
+	ld hl, wObtainedBadges
+	ld b, $1
+	call CountSetBits
+	pop de
+	ret
+
+; returns the level cap in wMaxLevel
+GetLevelCap::
+	ld hl, wElite4Flags
+	bit BIT_UNUSED_BEAT_ELITE_4, [hl]
+	ld a, 100
+	jr nz, .storeValue
+	call GetBadgesObtained
+	ld a, [wNumSetBits]
+	ld hl, BadgeLevelRestrictions
+	ld b, 0
+	ld c, a
+	add hl, bc
+	ld a, [hl]
+.storeValue
+	ld [wMaxLevel], a
+	ret
+
+BadgeLevelRestrictions:
+	db 10  ; 0 badges - Brock
+	db 18  ; 1 badge  - Misty
+	db 26  ; 2 badges - Surge
+	db 29  ; 3 badges - Erika
+	db 44  ; 4 badges - Koga
+	db 47  ; 5 badges - Sabrina
+	db 47  ; 6 badges - Blaine
+	db 49  ; 7 badges - Giovanni
+	db 56  ; 8 badges - Champion

@@ -1474,9 +1474,14 @@ ItemUseMedicine:
 	push hl
 	ld bc, MON_LEVEL
 	add hl, bc ; hl now points to level
+	push hl ; save level pointer
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld b, a
+	pop hl ; restore level pointer
 	ld a, [hl] ; a = level
-	cp MAX_LEVEL
-	jr z, .vitaminNoEffect ; can't raise level above 100
+	cp b ; level cap
+	jr nc, .vitaminNoEffect ; can't raise level above cap
 	inc a
 	ld [hl], a ; store incremented level
 	ld [wCurEnemyLevel], a
