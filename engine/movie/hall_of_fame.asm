@@ -212,9 +212,7 @@ HoFLoadPlayerPics:
 	ld de, RedPicBack
 	ld a, BANK(RedPicBack)
 	call UncompressSpriteFromDE
-	predef ScaleSpriteByTwo
-	ld de, vBackPic
-	call InterlaceMergeSpriteBuffers
+	call HoFLoadBackSpriteUnzoomed
 	ld c, $1
 
 HoFLoadMonPlayerPicTileIDs:
@@ -222,6 +220,12 @@ HoFLoadMonPlayerPicTileIDs:
 	ld b, TILEMAP_MON_PIC
 	hlcoord 12, 5
 	predef_jump CopyTileIDsFromList
+
+HoFLoadBackSpriteUnzoomed:
+	ld a, $66
+	ld de, vBackPic
+	push de
+	jp LoadUncompressedBackSprite
 
 HoFDisplayPlayerStats:
 	SetEvent EVENT_HALL_OF_FAME_DEX_RATING
