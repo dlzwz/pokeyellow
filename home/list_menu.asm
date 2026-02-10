@@ -140,10 +140,19 @@ DisplayListMenuIDLoop::
 	ld a, [hl] ; a = item quantity
 	ld [wMaxItemQuantity], a
 .skipGettingQuantity
+	ld a, ITEM_NAME
+	ld [wNameListType], a
 	ld a, [wCurItem]
 	ld [wNameListIndex], a
+; need to load the proper bank for TM/HM
+	cp HM01 
 	ld a, BANK(ItemNames)
 	ld [wPredefBank], a
+	jr c, .go_get_name
+; else it's a tm/hm
+	ld a, BANK(tmhmNames)
+	ld [wPredefBank], a
+.go_get_name
 	call GetName
 	jr .storeChosenEntry
 .pokemonList
