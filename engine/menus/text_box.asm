@@ -672,6 +672,14 @@ GetMonFieldMoves:
 	jr z, .checkCanLearnMoves ; no more moves
 	ld b, a
 	inc de
+	; Skip CUT, SURF, and STRENGTH - handled by overworld interaction
+	ld a, b
+	cp CUT
+	jr z, .skipKnownMove
+	cp SURF
+	jr z, .skipKnownMove
+	cp STRENGTH
+	jr z, .skipKnownMove
 	push bc
 	push de
 	push hl
@@ -712,20 +720,16 @@ GetMonFieldMoves:
 	pop bc
 	dec c
 	jr nz, .loop
+	jr .checkCanLearnMoves
+.skipKnownMove
+	dec c
+	jr nz, .loop
 .checkCanLearnMoves
-	; Now check Gen 1 HM field moves that can be learned
+	; Now check HM field moves that can be learned (FLY and FLASH only)
+	; CUT, SURF, STRENGTH are handled by overworld interaction
 	; hl points to next free slot in wFieldMoves
-	; Check CUT
-	ld b, CUT
-	call .checkHMFieldMove
 	; Check FLY
 	ld b, FLY
-	call .checkHMFieldMove
-	; Check SURF
-	ld b, SURF
-	call .checkHMFieldMove
-	; Check STRENGTH
-	ld b, STRENGTH
 	call .checkHMFieldMove
 	; Check FLASH
 	ld b, FLASH
