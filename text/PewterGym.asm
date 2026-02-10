@@ -56,12 +56,12 @@ _TM34ExplanationText::
 	cont "can be taught to"
 	cont "#MON!"
 
-	para "A TM is good only"
-	line "once! So when you"
-	cont "use one to teach"
-	cont "a new technique,"
-	cont "pick the #MON"
-	cont "carefully!"
+	para "A TM is good more"
+	line "than once! So when"
+	cont "you use one to"
+	cont "teach a new"
+	cont "technique, try it"
+	cont "on different #MON!"
 
 	para "TM34 contains"
 	line "BIDE!"
