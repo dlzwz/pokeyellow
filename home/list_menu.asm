@@ -26,6 +26,7 @@ DisplayListMenuID::
 	ld h, a ; hl = address of the list
 	ld a, [hl] ; the first byte is the number of entries in the list
 	ld [wListCount], a
+	call AutoSortItems ; auto-sort item lists before displaying
 	ld a, LIST_MENU_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; draw the menu text box
@@ -202,7 +203,6 @@ DisplayListMenuIDLoop::
 	jp z, DisplayListMenuIDLoop
 	dec [hl]
 	jp DisplayListMenuIDLoop
-
 DisplayChooseQuantityMenu::
 ; text box dimensions/coordinates for just quantity
 	hlcoord 15, 9

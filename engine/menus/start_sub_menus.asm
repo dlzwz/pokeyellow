@@ -454,7 +454,6 @@ StartMenu_Item::
 	call TossItem
 .tossZeroItems
 	jp ItemMenuLoop
-
 CannotUseItemsHereText:
 	text_far _CannotUseItemsHereText
 	text_end
