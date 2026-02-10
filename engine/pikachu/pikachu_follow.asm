@@ -514,6 +514,9 @@ Func_fc7aa:
 	ld [hl], a
 	cp $4
 	jp z, Func_fca0a
+	ldh a, [hJoyHeld]
+	and PAD_B
+	jp nz, FastPikachuFollow
 	call AreThereAtLeastTwoStepsInPikachuFollowCommandBuffer
 	jp c, FastPikachuFollow
 	jp NormalPikachuFollow
