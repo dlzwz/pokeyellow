@@ -3,6 +3,48 @@ GainExperience:
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
 	call DivideExpDataByNumMonsGainingExp
+	ld a, [wBoostExpByExpAll]
+	and a
+	jr z, .skipExpAll
+; check if any non-active, non-fainted party mon is below level cap
+	call GetLevelCap
+	ld hl, wPartyMon1
+	ld a, [wPartyCount]
+	ld d, a
+	ld e, 0
+.checkExpAllLoop
+	ld a, [wPlayerMonNumber]
+	cp e
+	jr z, .expAllNextMon
+	push hl
+	ld bc, MON_HP
+	add hl, bc
+	ld a, [hli]
+	or [hl]
+	pop hl
+	jr z, .expAllNextMon
+	push hl
+	ld bc, MON_LEVEL
+	add hl, bc
+	ld a, [hl]
+	pop hl
+	ld b, a
+	ld a, [wMaxLevel]
+	cp b
+	jr z, .expAllNextMon ; level == cap, skip
+	jr c, .expAllNextMon ; level > cap, skip
+; found a non-active mon below cap, print exp all message
+	ld hl, WithExpAllText
+	call PrintText
+	jr .skipExpAll
+.expAllNextMon
+	ld bc, PARTYMON_STRUCT_LENGTH
+	add hl, bc
+	inc e
+	ld a, e
+	cp d
+	jr c, .checkExpAllLoop
+.skipExpAll
 	ld hl, wPartyMon1
 	xor a
 	ld [wWhichPokemon], a
@@ -159,8 +201,12 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	ld hl, GainedText
+	ld a, [wBoostExpByExpAll] ; get using ExpAll flag
+    and a ; check the flag
+    jr nz, .skipExpText ; if there's EXP. all, skip showing any text
+    ld hl, GainedText ;there's no EXP. all, load the text to show
 	call PrintText
+.skipExpText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	call LoadMonData
