@@ -3,7 +3,8 @@ DrawPartyMenu_::
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
 	call UpdateSprites
-	farcall LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
+RedrawPartyMenu_ReloadSprites:
+	farcall LoadPartyMonSprites ; load pokemon icon graphics
 
 RedrawPartyMenu_::
 	ld a, [wPartyMenuTypeOrMessageID]
@@ -39,7 +40,7 @@ RedrawPartyMenu_::
 	ld a, $ff
 	ldh [hPartyMonIndex], a
 .regularMon
-	farcall WriteMonPartySpriteOAMByPartyIndex ; place the appropriate pokemon icon
+	farcall PlacePartyMonSprite ; place the appropriate pokemon icon
 	ld a, [wWhichPokemon]
 	inc a
 	ldh [hPartyMonIndex], a
