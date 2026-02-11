@@ -127,6 +127,32 @@ GainExperience:
 	ld a, [wIsInBattle]
 	dec a ; is it a trainer battle?
 	call nz, BoostExp ; if so, boost exp
+; post-champion exp boost (change POST_CHAMP_EXP_MULTIPLIER in constants/battle_constants.asm)
+	ld a, [wElite4Flags]
+	bit BIT_UNUSED_BEAT_ELITE_4, a
+	jr z, .noChampBoost
+	push hl
+	push de
+	xor a
+	ldh [hMultiplicand], a ; clear high byte (= hQuotient+1)
+	; hMultiplicand+1:+2 already = hQuotient+2:+3 (UNION overlap)
+	ld a, POST_CHAMP_EXP_MULTIPLIER
+	ldh [hMultiplier], a
+	call Multiply
+	; hProduct+0:+1:+2:+3 now = hQuotient+0:+1:+2:+3 (UNION overlap)
+	; cap at $FFFF if result overflows 16 bits
+	ldh a, [hQuotient]
+	ld b, a
+	ldh a, [hQuotient + 1]
+	or b
+	jr z, .noCapExp
+	ld a, $FF
+	ldh [hQuotient + 2], a
+	ldh [hQuotient + 3], a
+.noCapExp
+	pop de
+	pop hl
+.noChampBoost
 	inc hl
 	inc hl
 	inc hl
