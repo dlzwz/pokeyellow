@@ -285,6 +285,17 @@ CinnabarGymBlaineText:
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
+	ld a, [wPartyCount]
+	cp 4 ; Blaine has 3 - reject if player has 4+
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jp TextScriptEnd
+.partyOk
 	ld hl, .ReceivedVolcanoBadgeText
 	ld de, .ReceivedVolcanoBadgeText
 	call SaveEndBattleTextPointers
@@ -294,6 +305,14 @@ CinnabarGymBlaineText:
 
 .PreBattleText:
 	text_far _CinnabarGymBlainePreBattleText
+	text_end
+
+.TooManyPokemonText:
+	text_far _CinnabarGymBlaineTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .ReceivedVolcanoBadgeText:

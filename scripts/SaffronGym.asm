@@ -120,6 +120,17 @@ SaffronGymSabrinaText:
 .beforeBeat
 	ld hl, .Text
 	call PrintText
+	ld a, [wPartyCount]
+	cp 4 ; Sabrina has 3 - reject if player has 4+
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jr .done
+.partyOk
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
@@ -139,6 +150,14 @@ SaffronGymSabrinaText:
 
 .Text:
 	text_far _SaffronGymSabrinaText
+	text_end
+
+.TooManyPokemonText:
+	text_far _SaffronGymSabrinaTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .ReceivedMarshBadgeText:

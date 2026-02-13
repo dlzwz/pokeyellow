@@ -127,6 +127,17 @@ VermilionGymLTSurgeText:
 .before_beat
 	ld hl, .PreBattleText
 	call PrintText
+	ld a, [wPartyCount]
+	cp 2 ; Lt. Surge has 1 - reject if player has 2+
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jr .text_script_end
+.partyOk
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
@@ -149,6 +160,14 @@ VermilionGymLTSurgeText:
 
 .PreBattleText:
 	text_far _VermilionGymLTSurgePreBattleText
+	text_end
+
+.TooManyPokemonText:
+	text_far _VermilionGymLTSurgeTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .PostBattleAdviceText:

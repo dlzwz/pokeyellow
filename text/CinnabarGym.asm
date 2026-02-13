@@ -13,6 +13,12 @@ _CinnabarGymBlainePreBattleText::
 	line "have BURN HEAL!"
 	done
 
+_CinnabarGymBlaineTooManyPokemonText::
+	text "Hah! My fiery"
+	line "#MON will face"
+	cont "only 3 #MON!"
+	done
+
 _CinnabarGymBlaineReceivedVolcanoBadgeText::
 	text "I have"
 	line "burnt out!"

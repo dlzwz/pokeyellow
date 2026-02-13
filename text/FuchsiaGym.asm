@@ -16,6 +16,14 @@ _FuchsiaGymKogaBeforeBattleText::
 	cont "techniques!"
 	done
 
+_FuchsiaGymKogaTooManyPokemonText::
+	text "You rely on"
+	line "numbers."
+
+	para "Face me with only"
+	line "4 #MON!"
+	done
+
 _FuchsiaGymKogaReceivedSoulBadgeText::
 	text "Humph!"
 	line "You have proven"

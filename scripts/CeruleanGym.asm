@@ -105,6 +105,17 @@ CeruleanGymMistyText:
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
+	ld a, [wPartyCount]
+	cp 3 ; Misty has 2 - reject if player has 3+
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jr .done
+.partyOk
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
@@ -126,6 +137,14 @@ CeruleanGymMistyText:
 
 .PreBattleText:
 	text_far _CeruleanGymMistyPreBattleText
+	text_end
+
+.TooManyPokemonText:
+	text_far _CeruleanGymMistyTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .TM11ExplanationText:

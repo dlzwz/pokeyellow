@@ -18,6 +18,12 @@ _ViridianGymGiovanniPreBattleText::
 	cont "greatest trainer!"
 	done
 
+_ViridianGymGiovanniTooManyPokemonText::
+	text "If you wish to"
+	line "face me, bring"
+	cont "only 5 #MON."
+	done
+
 _ViridianGymGiovanniReceivedEarthBadgeText::
 	text "Ha!"
 	line "That was a truly"

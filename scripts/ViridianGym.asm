@@ -229,6 +229,17 @@ ViridianGymGiovanniText:
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
+	ld a, [wPartyCount]
+	cp 6 ; Giovanni has 5 - reject if player has 6
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jr .text_script_end
+.partyOk
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
@@ -248,6 +259,14 @@ ViridianGymGiovanniText:
 
 .PreBattleText:
 	text_far _ViridianGymGiovanniPreBattleText
+	text_end
+
+.TooManyPokemonText:
+	text_far _ViridianGymGiovanniTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .ReceivedEarthBadgeText:

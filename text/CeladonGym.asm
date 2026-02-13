@@ -25,6 +25,14 @@ _CeladonGymErikaPreBattleText::
 	line "shall not lose."
 	done
 
+_CeladonGymErikaTooManyPokemonText::
+	text "Very well."
+
+	para "Return with 3"
+	line "#MON, and we"
+	cont "shall begin."
+	done
+
 _CeladonGymErikaReceivedRainbowBadgeText::
 	text "Oh!"
 	line "I concede defeat."

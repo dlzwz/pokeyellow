@@ -119,6 +119,17 @@ FuchsiaGymKogaText:
 .beforeBeat
 	ld hl, .BeforeBattleText
 	call PrintText
+	ld a, [wPartyCount]
+	cp 5 ; Koga has 4 - reject if player has 5+
+	jr c, .partyOk
+	call ManualTextScroll
+	ld hl, .EllipsisText
+	call PrintText
+	call ManualTextScroll
+	ld hl, .TooManyPokemonText
+	call PrintText
+	jr .done
+.partyOk
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
@@ -140,6 +151,14 @@ FuchsiaGymKogaText:
 
 .BeforeBattleText:
 	text_far _FuchsiaGymKogaBeforeBattleText
+	text_end
+
+.TooManyPokemonText:
+	text_far _FuchsiaGymKogaTooManyPokemonText
+	text_end
+
+.EllipsisText:
+	text_far _GymLeaderEllipsisText
 	text_end
 
 .ReceivedSoulBadgeText:

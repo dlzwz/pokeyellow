@@ -20,6 +20,13 @@ _VermilionGymLTSurgePreBattleText::
 	line "into surrender!"
 	done
 
+_VermilionGymLTSurgeTooManyPokemonText::
+	text "No overwhelming"
+	line "force!"
+
+	para "1 #MON only!"
+	done
+
 _VermilionGymLTSurgePostBattleAdviceText::
 	text "A little word of"
 	line "advice, kid!"

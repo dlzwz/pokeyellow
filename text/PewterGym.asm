@@ -17,6 +17,19 @@ _PewterGymBrockPreBattleText::
 	cont "me your best!"
 	done
 
+_PewterGymBrockTooManyPokemonText::
+	text "A Gym battle is"
+	line "fought evenly."
+
+	para "Bring 2 #MON if"
+	line "you wish to"
+	cont "challenge me."
+	done
+
+_GymLeaderEllipsisText::
+	text "..."
+	done
+
 _PewterGymBrockPostBattleAdviceText::
 	text "There are all"
 	line "kinds of trainers"

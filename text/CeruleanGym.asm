@@ -19,6 +19,13 @@ _CeruleanGymMistyPreBattleText::
 	line "sweetie?"
 	done
 
+_CeruleanGymMistyTooManyPokemonText::
+	text "Don't crowd me."
+
+	para "Bring only 2"
+	line "#MON."
+	done
+
 _CeruleanGymMistyTM11ExplanationText::
 	text "TM11 teaches"
 	line "BUBBLEBEAM!"

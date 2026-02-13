@@ -16,6 +16,14 @@ _SaffronGymSabrinaText::
 	cont "you my powers!"
 	done
 
+_SaffronGymSabrinaTooManyPokemonText::
+	text "I foresaw this."
+
+	para "Bring 3 #MON if"
+	line "you wish to test"
+	cont "my powers."
+	done
+
 _SaffronGymSabrinaReceivedMarshBadgeText::
 	text "I'm"
 	line "shocked!"
